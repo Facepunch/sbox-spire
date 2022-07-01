@@ -1,7 +1,7 @@
 {
   "Title": "Spire",
   "Type": "game",
-  "Org": "devultj",
+  "Org": "facepunch",
   "Ident": "spire",
   "Schema": 1,
   "HasAssets": true,
@@ -25,6 +25,6 @@
     "PerMapRanking": false,
     "LeaderboardType": 0,
     "GameNetworkType": 0,
-    "MaxPlayers": 60
+    "MaxPlayers": 16
   }
 }
