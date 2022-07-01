@@ -1,0 +1,24 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		AbilityID = "self_heal"
+		AbilityName = "Healing Salve"
+		Description = "Heals the user"
+		Cooldown = 30
+		Icon = resource:"ui/ability_icons/heal.jpg"
+		InteractionType = 0
+		_AbilityRange = "0,0"
+		AbilityRange = 
+		{
+			Min = 0
+			Max = 0
+		}
+		AbilityEffectRadius = 60
+		CharacterSpeedMod = 1
+		Duration = 0
+		RunDefaultPlayerAnimation = false
+		Sounds = null
+		Particles = null
+	}
+}

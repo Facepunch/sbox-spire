@@ -1,0 +1,29 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		AbilityID = "explosive_arrow_attack"
+		AbilityName = "Explosive Arrow Attack"
+		Description = "Fires an explosive arrow from the caster\'s weapon"
+		Cooldown = 35
+		Icon = resource:"ui/ability_icons/explosive_arrow.jpg"
+		InteractionType = "Direction"
+		_AbilityRange = "0,0"
+		AbilityRange = 
+		{
+		}
+		AbilityEffectRadius = 256
+		CharacterSpeedMod = 0.1
+		Duration = 0.5
+		RunDefaultPlayerAnimation = true
+		Sounds = 
+		[
+			{
+				Tag = "pre"
+				Sound = "bow_draw"
+				Attachment = ""
+			},
+		]
+		Particles = null
+	}
+}

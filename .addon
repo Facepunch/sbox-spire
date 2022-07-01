@@ -1,0 +1,30 @@
+{
+  "Title": "Spire",
+  "Type": "game",
+  "Org": "devultj",
+  "Ident": "spire",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": [
+    "/config/*",
+    "/fonts/*",
+    "/ui/*",
+    "/sounds/*"
+  ],
+  "HasCode": true,
+  "CodePath": "code",
+  "RootNamespace": "Spire",
+  "Metadata": {
+    "MapList": [
+      "devultj.spire_meadows"
+    ],
+    "MinPlayers": 1,
+    "MapSelect": 2,
+    "RankType": 0,
+    "PerMapRanking": false,
+    "LeaderboardType": 0,
+    "GameNetworkType": 0,
+    "MaxPlayers": 60
+  }
+}

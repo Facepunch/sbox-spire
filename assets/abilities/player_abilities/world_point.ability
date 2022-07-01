@@ -1,0 +1,24 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		AbilityID = "world_point"
+		AbilityName = "World Point Test"
+		Description = "This ability does nothing."
+		Cooldown = 17
+		Icon = resource:"ui/ability_icons/aoe_arrow.jpg"
+		InteractionType = "WorldPoint"
+		_AbilityRange = "256,512"
+		AbilityRange = 
+		{
+			Min = 256
+			Max = 512
+		}
+		AbilityEffectRadius = 50
+		CharacterSpeedMod = 1
+		Duration = 0
+		RunDefaultPlayerAnimation = true
+		Sounds = null
+		Particles = null
+	}
+}

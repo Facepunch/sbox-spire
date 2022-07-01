@@ -1,0 +1,102 @@
+@import "/UI/Theme.scss";
+
+DuelHudPanel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    > .header {
+        margin-top: $safe-zone-y;
+        flex-direction: column;
+        width: 100%;
+        height: 90px;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
+        > .scores {
+            .score {
+                width: 100%;
+                height: 100%;
+                font-size: 32px;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+            }
+
+            > .blue-team {
+                width: 60px;
+                height: 60px;
+                background-color: rgba( $duel-blue-color, 0.8 );
+            }
+
+            > .separator {
+                width: 200px;
+                background-color: rgba( black, 0.5 );
+                height: 60px;
+                backdrop-filter: blur(5px);
+
+                > .game-state {
+                    width: 100%;
+                    height: 100%;
+                    font-size: 24px;
+                    text-align: center;
+                    justify-content: center;
+                    align-items: center;
+                    align-content: center;
+                }
+            }
+
+            > .red-team {
+                width: 60px;
+                height: 60px;
+                background-color: rgba( $duel-red-color, 0.8 );
+            }
+
+
+            > .team-members {
+                min-width: 64px;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                padding-right: 8px;
+                padding-left: 8px;
+
+                > .avatar {
+                    transition: all 0.2s ease;
+                    width: 48px;
+                    height: 48px;
+                    box-shadow: 0px 0px 20px black;
+                    margin-right: 4px;
+
+                    &.dead {
+                        top: 8px;
+                        opacity: 0.2;
+                    }
+                }
+
+                &.blue {
+                    > .avatar {
+                        &:last-child {
+                            margin-right: 0px;
+                        }
+
+                        border: 1px solid $duel-blue-color;
+                    }
+                }
+
+                &.red {
+                    > .avatar {
+                        &:first-child {
+                            margin-right: 4px;
+                        }
+
+                        border: 1px solid $duel-red-color;
+                    }
+                }
+            }
+        }
+    }
+}

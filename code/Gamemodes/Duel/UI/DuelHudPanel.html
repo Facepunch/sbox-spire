@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="DuelHudPanel.scss" />
+
+<div>
+    <div class="header">
+        <div class="scores">
+            <div class="team-members blue" @ref="BlueTeamMembers">
+            </div>
+
+            <div class="blue-team" @ref="BlueScorePanel">
+                <label class="score" @text="BlueScore">0</label>
+            </div>
+
+            <div class="separator">
+                <label class="game-state" @text="GameState">This is a duel game</label>
+            </div>
+
+            <div class="red-team" @ref="RedScorePanel">
+                <label class="score" @text="RedScore">0</label>
+            </div>
+            <div class="team-members red" @ref="RedTeamMembers">
+            </div>
+        </div>
+
+    </div>
+</div>

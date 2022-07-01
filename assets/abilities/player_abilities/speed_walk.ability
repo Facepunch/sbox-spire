@@ -1,0 +1,38 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		AbilityID = "speed_walk"
+		AbilityName = "Speed Walking"
+		Description = "Gives the caster a boost of speed."
+		Cooldown = 10
+		Icon = resource:"ui/ability_icons/speed_walk.jpg"
+		InteractionType = "Generic"
+		_AbilityRange = "0,0"
+		AbilityRange = 
+		{
+		}
+		AbilityEffectRadius = 60
+		CharacterSpeedMod = 1
+		Duration = 1.25
+		RunDefaultPlayerAnimation = true
+		Sounds = null
+		Particles = 
+		[
+			{
+				Tag = "pre"
+				Particle = resource:"particles/weapons/crossbow/speed_trail.vpcf"
+				FromCharacter = true
+				Attachment = "foot_L"
+				Lifetime = 2
+			},
+			{
+				Tag = "pre"
+				Particle = resource:"particles/weapons/crossbow/speed_trail.vpcf"
+				FromCharacter = true
+				Attachment = "foot_R"
+				Lifetime = 2
+			},
+		]
+	}
+}

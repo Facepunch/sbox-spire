@@ -1,0 +1,73 @@
+@import "/UI/Theme.scss";
+
+ChatPanel {
+    position: absolute;
+    left: $safe-zone-x;
+    bottom: 200px;
+    width: 512px;
+    flex-direction: column;
+    z-index: 100;
+
+    > .text-entry {
+        transition: border 0.2s ease;
+        opacity: 0;
+        color: white;
+        padding: 10px;
+        flex-shrink: 0;
+        flex-grow: 0;
+        font-size: 20px;
+        background-image: linear-gradient( -90deg, rgba( black, 0.5 ), rgba( black, 0 ) );
+    }
+
+    > .canvas {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &.open {
+        > .text-entry {
+            border-bottom: 4px solid rgba( white, 0.5 );
+            opacity: 1;
+        }
+    }
+}
+
+ChatEntryPanel {
+    margin-bottom: 5px;
+    color: white;
+    transition: all 1s ease-out;
+    opacity: 1;
+    max-height: 200px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding: 12px;
+    min-height: 32px;
+    max-width: 100%;
+    transform: scale( 1 );
+
+    &:intro {
+        transition: all 2s ease-out;
+        margin-left: -100px;
+        opacity: 0;
+    }
+
+    &:outro {
+        margin-left: -100px;
+        opacity: 0;
+        transition: all 2s ease-out;
+    }
+
+    .category {
+        color: #ccc;
+        font-size: 18px;
+        font-weight: 600;
+        flex-grow: 1;
+        margin-right: 16px;
+    }
+
+    .message {
+        color: #ccc;
+        font-size: 18px;
+        flex-grow: 1;
+    }
+}

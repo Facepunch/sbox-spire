@@ -1,0 +1,30 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		AbilityID = "cone_arrow_attack"
+		AbilityName = "Cone Arrow Attack"
+		Description = "Fires three arrows in a cone from the caster"
+		Cooldown = 15
+		Icon = resource:"ui/ability_icons/arrow_cone_attack.jpg"
+		InteractionType = 2
+		_AbilityRange = "0,0"
+		AbilityRange = 
+		{
+			Min = 0
+			Max = 0
+		}
+		CharacterSpeedMod = 0.1
+		Duration = 0.5
+		RunDefaultPlayerAnimation = true
+		Sounds = 
+		[
+			{
+				Tag = "pre"
+				Sound = "bow_draw"
+				Attachment = ""
+			},
+		]
+		Particles = null
+	}
+}

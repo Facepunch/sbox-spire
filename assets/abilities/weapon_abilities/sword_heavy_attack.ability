@@ -1,0 +1,36 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		Cooldown = 1
+		AbilityID = "sword_heavy_attack"
+		AbilityName = "Slash"
+		Description = "A basic sword attack."
+		Icon = resource:"ui/ability_icons/rage_attack.jpg"
+		CharacterSpeedMod = 0.5
+		Duration = 0.5
+		RunDefaultPlayerAnimation = false
+		Sounds = 
+		[
+			{
+				Tag = "pre"
+				Sound = "light_sword_swing"
+				Attachment = ""
+			},
+			{
+				Tag = "flesh"
+				Sound = "heavy_sword_stab"
+				Attachment = ""
+			},
+		]
+		Particles = 
+		[
+			{
+				Tag = "pre"
+				Particle = resource:"particles/weapons/basic_sword/basic_swipe/basic_swipe.vpcf"
+				FromCharacter = true
+				Attachment = ""
+			},
+		]
+	}
+}

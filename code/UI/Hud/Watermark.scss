@@ -1,0 +1,16 @@
+@import "/UI/Theme.scss";
+
+Watermark {
+    flex-direction: column;
+    font-size: 24px;
+    padding: $safe-zone-y $safe-zone-x $safe-zone-x $safe-zone-y;
+
+    > .title {
+        opacity: 0.5;
+        font-size: 48px;
+    }
+
+    > .subtitle {
+        opacity: 0.5;
+    }
+}

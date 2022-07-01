@@ -1,0 +1,19 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		SkyColor = "0.43529,0.7451,0.87059,1"
+		LightColor = "1,0.91373,0.81961,1"
+		AmbientLightColor = "0.1,0.1,0.1,1"
+		FogEnabled = true
+		FogStartDistance = 0
+		FogEndDistance = 4000
+		FogStartHeight = 0
+		FogEndHeight = 200
+		FogMaximumOpacity = 0.5
+		FogColor = "0.43529,0.7451,0.87059,1"
+		FogStrength = 1
+		FogDistanceFalloffExponent = 2
+		FogVerticalFalloffExponent = 1
+	}
+}

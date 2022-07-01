@@ -1,0 +1,31 @@
+@import "/UI/Theme.scss";
+
+SpireHud {
+    pointer-events: visible;
+
+    &.camera-movement {
+        pointer-events: none;
+    }
+
+    &.invisible {
+        display: none;
+    }
+
+    > .controls {
+        position: absolute;
+        padding: $safe-zone-y $safe-zone-x $safe-zone-x $safe-zone-y;
+        bottom: 0;
+        flex-direction: column;
+
+        inputhint {
+            margin-top: 4px;
+        }
+    }
+}
+
+// Default label properties
+label {
+    font-family: Cinzel;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}

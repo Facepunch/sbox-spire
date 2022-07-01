@@ -1,0 +1,217 @@
+HEADER
+{
+	DevShader = true;
+	CompileTargets = ( IS_SM_50 && ( PC || VULKAN ) );
+	Description = "Spire - Sky";
+	Version = 1;
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+MODES
+{
+	VrForward();
+	ToolsVis();
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+FEATURES
+{
+	#include "vr_common_features.fxc"
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+COMMON
+{
+	#include "system.fxc"
+	#include "vr_common.fxc"
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+struct VS_INPUT
+{
+	float4 vPositionOs : POSITION < Semantic( PosXyz ); >;
+};
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+struct PS_INPUT
+{
+	float3 vPositionWs : TEXCOORD1;
+
+	#if ( PROGRAM == VFX_PROGRAM_VS )
+		float4 vPositionPs	: SV_Position;
+	#endif
+	#if ( PROGRAM == VFX_PROGRAM_PS )
+		float4 vPositionSs : SV_ScreenPosition;
+	#endif
+	
+	#if ( PROGRAM != VFX_PROGRAM_PS ) // VS or GS only
+		#if ( D_MULTIVIEW_INSTANCING == 1 )
+			float vClip0 : SV_ClipDistance0;
+		#elif ( D_MULTIVIEW_INSTANCING == 2 )
+			float2 vClip0 : SV_ClipDistance0;
+		#endif
+	#endif
+};
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+VS
+{
+	// Includes -----------------------------------------------------------------------------------------------------------------------------------------------
+	#define IS_SPRITECARD 1
+	#include "system.fxc"
+	#include "vr_lighting.fxc"
+
+	// Combos -------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// Constants ----------------------------------------------------------------------------------------------------------------------------------------------
+
+	// Main ---------------------------------------------------------------------------------------------------------------------------------------------------
+	PS_INPUT MainVs( const VS_INPUT i )
+	{
+
+		PS_INPUT o;
+
+		o.vPositionWs = i.vPositionOs.xyz;
+
+		float flSkyboxScale = g_flNearPlane + g_flFarPlane;
+		float3 vPositionWs = g_vCameraPositionWs.xyz + i.vPositionOs.xyz * flSkyboxScale;
+
+		o.vPositionPs.xyzw = Position3WsToPs( vPositionWs.xyz );
+		o.vPositionWs.xyz = vPositionWs;
+		
+		return o;
+	}
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS
+{
+	//#include "vr_shared_standard_ps_code.fxc"
+	#include "vr_lighting.fxc"
+	#include "spire_atmosphere.fxc"
+	
+	// Combos -------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// Render State -------------------------------------------------------------------------------------------------------------------------------------------
+	RenderState( CullMode, NONE );
+	RenderState( DepthWriteEnable, false );
+	RenderState( DepthEnable, true );
+	RenderState( DepthFunc, LESS_EQUAL );
+	
+	// Attributes ---------------------------------------------------------------------------------------------------------------------------------------------
+	BoolAttribute( sky, true );
+	SamplerState g_sBilinearWrap < Filter( BILINEAR ); AddressU( WRAP ); AddressV( WRAP ); >;
+
+	// Output -------------------------------------------------------------------------------------------------------------------------------------------------
+	struct PS_OUTPUT
+	{
+		float4 vColor0 : SV_Target0;
+	};
+
+	// Constants ----------------------------------------------------------------------------------------------------------------------------------------------
+
+	// Main ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+	// Could be better
+	float noise( in float3 x )
+	{
+		float3 p = floor(x);
+		float3 f = frac(x);
+		f = f*f*(3.0-2.0*f);
+		float2 uv = (p.xy+float2(37.0,17.0) * p.z) + f.xy;
+		float2 rg = AttributeTex2DS( g_tBlueNoise, g_sBilinearWrap, (uv + 0.5)/256.0 ).xy;
+		return lerp( rg.x, rg.y, f.z );
+	}
+
+	float3 GetSunDir()
+	{
+		//return normalize( float3( 1,0, ( fmod(g_flTime * 0.1, 0.5) - 0.25 )  ) );
+		return g_vSunLightDir.xyz;
+	}
+
+	float3 GetSunColor()
+	{
+		//return getSunColorDirectly(1.0, GetSunDir()) * g_vSunLightColor.xyz;
+		return g_vSunLightColor.xyz;
+	}
+
+
+	float3 GetAtmosphere(float3 ray){
+
+		float fAtmosphereTickness = g_vSunLightColor.w;
+		float3 fSunIntensity = GetSunColor();
+		float fPlanetSize = 6371e3;
+		float fAtmosphereSize = 100e3;
+		float fSeaLevel = 4096.0f;
+		float3 uSunPos = GetSunDir();
+
+		float3 color = atmosphere
+		(
+			ray.xzy,           // normalized ray direction
+			float3(0,fPlanetSize + g_vCameraPositionWs.z + fSeaLevel,0),               // ray origin
+			uSunPos.xzy,                        // position of the sun
+			75,                           // intensity of the sun
+			fPlanetSize,                         // radius of the planet in meters
+			fPlanetSize + fAtmosphereSize,                         // radius of the atmosphere in meters
+			float3(5.5e-6, 13.0e-6, 22.4e-6), // Rayleigh scattering coefficient
+			21e-6,                          // Mie scattering coefficient
+			8e3,                            // Rayleigh scale height
+			1.2e3,                          // Mie scale height
+			0.758                           // Mie preferred scattering direction
+		);
+
+		// Apply exposure.
+		//color = 1.0 - exp(-1.0 * color);
+
+		return color * fSunIntensity;
+		
+	}
+
+	float Stars( in float3 vRay )
+	{
+		//vRay.z = abs(vRay.z);
+
+		const float fStarScale = 0.9;
+		const float fStarAmount = 0.9;
+
+		float vStars = noise(vRay * ( g_vViewportSize.y * fStarScale ) * 0.75 );
+		vStars += noise(vRay * ( g_vViewportSize.y * fStarScale ) * 0.5 );
+		vStars += noise(vRay * ( g_vViewportSize.y * fStarScale ) * 0.25);
+		vStars += noise(vRay * ( g_vViewportSize.y * fStarScale ) * 0.1 );
+		vStars += noise(vRay * ( g_vViewportSize.y * fStarScale ) ) * (1.0 - fStarAmount);
+
+		vStars = clamp(vStars, 0.0, 1.0);
+		vStars = (1.0 - vStars);
+
+		vStars *= saturate( vRay.z * 100 );
+
+		return vStars;
+	}
+
+	float3 Sun( in float3 vRay )
+	{
+		float fSun = pow( saturate(dot( vRay, GetSunDir() ) + 0.00025 ), 10000.0f ) * 10;
+
+		fSun *= saturate( vRay.z * 100 );
+		return GetSunColor() * fSun;
+	}
+
+	PS_OUTPUT MainPs( PS_INPUT i )
+	{
+		PS_OUTPUT o;
+		// Generate Object->World matrix and animation scale
+		float3 vPositionWs = i.vPositionWs.xyz;
+		float3 vRay = normalize( vPositionWs - g_vCameraPositionWs );
+		float3 vCamDir = g_vCameraDirWs;
+		float3 vColor;
+	
+
+		vColor = Stars( vRay );
+		vColor += GetAtmosphere( vRay );
+		vColor += Sun( vRay );
+
+		o.vColor0.rgba = float4( vColor , 1.0 );
+
+		return o;
+	}
+}
