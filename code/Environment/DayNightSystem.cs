@@ -11,10 +11,10 @@ public partial class DayNightSystem : Entity
 	public TimeStage TimeStage { get; protected set; }
 
 	[Net, Predicted]
-	public float TimeOfDay { get; set; } = 9f;
+	public float TimeOfDay { get; set; } = 10f;
 
 	[ConVar.Replicated( "spire_daynight_speed", Help = "How fast the day night cycle is" )]
-	public static float DayNightSpeed { get; set; } = 0.2f;
+	public static float DayNightSpeed { get; set; } = 0.05f;
 
 	public DayNightSystem()
 	{
@@ -43,8 +43,6 @@ public partial class DayNightSystem : Entity
 	[Event.Tick]
 	protected void Tick()
 	{
-		Log.State( $"{DayNightSpeed}" );
-
 		TimeOfDay += DayNightSpeed * Time.Delta;
 
 		if ( TimeOfDay >= 24f )
