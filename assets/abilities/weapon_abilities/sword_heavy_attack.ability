@@ -2,11 +2,17 @@
 {
 	data = 
 	{
-		Cooldown = 1
 		AbilityID = "sword_heavy_attack"
 		AbilityName = "Slash"
 		Description = "A basic sword attack."
+		Cooldown = 1
 		Icon = resource:"ui/ability_icons/rage_attack.jpg"
+		InteractionType = "Generic"
+		_AbilityRange = "0,0"
+		AbilityRange = 
+		{
+		}
+		AbilityEffectRadius = 60
 		CharacterSpeedMod = 0.5
 		Duration = 0.5
 		RunDefaultPlayerAnimation = false
@@ -14,12 +20,12 @@
 		[
 			{
 				Tag = "pre"
-				Sound = "light_sword_swing"
+				Sound = "heavy_sword_attack"
 				Attachment = ""
 			},
 			{
 				Tag = "flesh"
-				Sound = "heavy_sword_stab"
+				Sound = "heavy_sword_hit"
 				Attachment = ""
 			},
 		]

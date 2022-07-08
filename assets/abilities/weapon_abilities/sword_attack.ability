@@ -20,12 +20,12 @@
 		[
 			{
 				Tag = "pre"
-				Sound = "light_sword_swing"
+				Sound = "sword_attack"
 				Attachment = ""
 			},
 			{
 				Tag = "flesh"
-				Sound = "stab_sword_flesh"
+				Sound = "sword_hit"
 				Attachment = ""
 			},
 		]
