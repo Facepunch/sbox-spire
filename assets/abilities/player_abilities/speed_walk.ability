@@ -16,7 +16,14 @@
 		CharacterSpeedMod = 1
 		Duration = 1.25
 		RunDefaultPlayerAnimation = true
-		Sounds = null
+		Sounds = 
+		[
+			{
+				Tag = "pre"
+				Sound = "speed_walk"
+				Attachment = ""
+			},
+		]
 		Particles = 
 		[
 			{

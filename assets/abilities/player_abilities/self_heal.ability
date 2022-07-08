@@ -7,18 +7,23 @@
 		Description = "Heals the user"
 		Cooldown = 30
 		Icon = resource:"ui/ability_icons/heal.jpg"
-		InteractionType = 0
+		InteractionType = "Generic"
 		_AbilityRange = "0,0"
 		AbilityRange = 
 		{
-			Min = 0
-			Max = 0
 		}
 		AbilityEffectRadius = 60
 		CharacterSpeedMod = 1
 		Duration = 0
 		RunDefaultPlayerAnimation = false
-		Sounds = null
+		Sounds = 
+		[
+			{
+				Tag = "pre"
+				Sound = "self_heal"
+				Attachment = ""
+			},
+		]
 		Particles = null
 	}
 }
