@@ -338,6 +338,14 @@
 			_class = "C_OP_EndCapTimedDecay"
 		},
 	]
+	m_Constraints = 
+	[
+		{
+			_class = "C_OP_ConstrainDistance"
+			m_fMaxDistance = 32.0
+			m_bDisableOperator = true
+		},
+	]
 	m_Renderers = 
 	[
 		{

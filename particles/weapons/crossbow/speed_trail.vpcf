@@ -631,10 +631,6 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/weapons/crossbow/crossbow_trail_a.vpcf"
-			m_bDisableChild = true
-		},
-		{
 			m_ChildRef = resource:"particles/weapons/crossbow/speed_trail_a.vpcf"
 		},
 	]

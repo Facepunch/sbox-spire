@@ -1356,11 +1356,4 @@
 			m_flPhi = 15.0
 		},
 	]
-	m_Children = 
-	[
-		{
-			m_ChildRef = resource:"particles/weapons/crossbow/crossbow_trail_a.vpcf"
-			m_bDisableChild = true
-		},
-	]
 }
