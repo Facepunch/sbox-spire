@@ -21,8 +21,8 @@
 
     > .cooldown-label {
         position: absolute;
-        top: -24px;
-        font-size: 16px;
+        top: 10px;
+        font-size: 32px;
     }
 
     > .no-ability-panel {
@@ -53,11 +53,11 @@
 
     &.on-cooldown {
         transform: scale( 0.95 );
-        border: 2px solid rgba( black, 0.8 );
+        border: 2px solid rgba( red, 0.8 );
 
         > .on-cooldown-panel {
             opacity: 1;
-            background-color: rgba( black, 0.6 );
+            background-color: rgba( black, .9 );
             border-radius: 0px;
         }
     }
@@ -70,7 +70,7 @@
 
     &.in-use {
         transform: scale( 1.05 );
-        border: 1px solid rgba( 0, 125, 255 );
+        border: 1px solid rgb(76 255 0);
 
         > .on-cooldown-panel {
             opacity: 1;
