@@ -17,7 +17,7 @@ partial class BaseCharacter
 		ent.MoveType = MoveType.Physics;
 		ent.UsePhysicsCollision = true;
 		ent.EnableAllCollisions = true;
-		ent.CollisionGroup = CollisionGroup.Debris;
+		ent.Tags.Add( "debris", "solid" );
 		ent.SetModel( GetModelName() );
 		ent.CopyBonesFrom( this );
 		ent.CopyBodyGroups( this );
@@ -28,10 +28,6 @@ partial class BaseCharacter
 		ent.SurroundingBoundsMode = SurroundingBoundsType.Physics;
 		ent.RenderColor = RenderColor;
 		ent.PhysicsGroup.Velocity = velocity;
-
-		ent.SetInteractsAs( CollisionLayer.Debris );
-		ent.SetInteractsWith( CollisionLayer.WORLD_GEOMETRY );
-		ent.SetInteractsExclude( CollisionLayer.Player | CollisionLayer.Debris );
 
 		foreach ( var child in Children )
 		{

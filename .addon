@@ -20,11 +20,54 @@
       "devultj.spire_meadows"
     ],
     "MinPlayers": 1,
-    "MapSelect": 2,
-    "RankType": 0,
+    "MapSelect": "Tagged",
+    "RankType": "None",
     "PerMapRanking": false,
-    "LeaderboardType": 0,
-    "GameNetworkType": 0,
-    "MaxPlayers": 16
+    "LeaderboardType": "None",
+    "GameNetworkType": "Multiplayer",
+    "MaxPlayers": 16,
+    "Collision": {
+      "Defaults": {
+        "solid": "Collide",
+        "trigger": "Trigger",
+        "ladder": "Ignore",
+        "water": "Trigger",
+        "player": "Collide",
+        "projectile": "Trigger",
+        "playerclip": "Collide",
+        "passbullets": "Trigger"
+      },
+      "Pairs": [
+        {
+          "a": "solid",
+          "b": "solid",
+          "r": "Collide"
+        },
+        {
+          "a": "trigger",
+          "b": "playerclip",
+          "r": "Ignore"
+        },
+        {
+          "a": "trigger",
+          "b": "solid",
+          "r": "Trigger"
+        },
+        {
+          "a": "solid",
+          "b": "trigger",
+          "r": "Collide"
+        },
+        {
+          "a": "playerclip",
+          "b": "solid",
+          "r": "Collide"
+        },
+        {
+          "a": "water",
+          "b": "player"
+        }
+      ]
+    }
   }
 }

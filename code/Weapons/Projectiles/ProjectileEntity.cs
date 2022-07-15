@@ -127,10 +127,10 @@ public partial class ProjectileEntity : ModelEntity, ICleanupEntity
 		var newPosition = GetTargetPosition();
 
 		var trace = Trace.Ray( Position, newPosition )
-			.HitLayer( CollisionLayer.Water, true )
 			.Size( Radius )
 			.Ignore( this )
 			.Ignore( IgnoreEntity )
+			.WithTag( "solid" )
 			.WithoutTags( "projectile" )
 			.Run();
 

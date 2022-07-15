@@ -524,14 +524,13 @@ public partial class CharacterController : BasePlayerController
 
 		var pm = Trace.Ray( start, end )
 					.Size( mins, maxs )
-					.HitLayer( CollisionLayer.All, false )
-					.HitLayer( CollisionLayer.LADDER, true )
+					.WithTag( "ladder" )
 					.Ignore( Pawn )
 					.Run();
 
 		IsTouchingLadder = false;
 
-		if ( pm.Hit && !(pm.Entity is ModelEntity me && me.CollisionGroup == CollisionGroup.Always) )
+		if ( pm.Hit && pm.Entity is not ModelEntity me )
 		{
 			IsTouchingLadder = true;
 			LadderNormal = pm.Normal;

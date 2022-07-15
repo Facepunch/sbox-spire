@@ -36,6 +36,7 @@ public partial class BaseCharacter : BasePawn
 
 	public BaseCharacter()
 	{
+		Tags.Add( "solid" );
 		Tags.Add( "player" );
 	}
 
@@ -146,8 +147,6 @@ public partial class BaseCharacter : BasePawn
 
 	public virtual void CreateHull()
 	{
-		CollisionGroup = CollisionGroup.Player;
-		AddCollisionLayer( CollisionLayer.Player );
 		SetupPhysicsFromAABB( PhysicsMotionType.Keyframed, new Vector3( -16, -16, 0 ), new Vector3( 16, 16, 72 ) );
 
 		MoveType = MoveType.MOVETYPE_WALK;
