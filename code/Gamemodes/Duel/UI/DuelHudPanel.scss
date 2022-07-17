@@ -6,7 +6,6 @@ DuelHudPanel {
     height: 100%;
 
     > .header {
-        margin-top: $safe-zone-y;
         flex-direction: column;
         width: 100%;
         height: 90px;
@@ -15,6 +14,8 @@ DuelHudPanel {
         align-content: center;
 
         > .scores {
+            box-shadow: 0px 0px 20px rgba( black, 0.5 );
+
             .score {
                 width: 100%;
                 height: 100%;
@@ -23,24 +24,26 @@ DuelHudPanel {
                 justify-content: center;
                 align-items: center;
                 align-content: center;
+                font-family: $secondary-font;
             }
 
             > .blue-team {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 40px;
                 background-color: rgba( $duel-blue-color, 0.8 );
             }
 
             > .separator {
-                width: 200px;
+                width: 140px;
                 background-color: rgba( black, 0.5 );
-                height: 60px;
+                height: 40px;
                 backdrop-filter: blur(5px);
 
                 > .game-state {
                     width: 100%;
                     height: 100%;
                     font-size: 24px;
+                    font-family: $secondary-font;
                     text-align: center;
                     justify-content: center;
                     align-items: center;
@@ -49,11 +52,10 @@ DuelHudPanel {
             }
 
             > .red-team {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 40px;
                 background-color: rgba( $duel-red-color, 0.8 );
             }
-
 
             > .team-members {
                 min-width: 64px;
@@ -67,8 +69,7 @@ DuelHudPanel {
                 > .avatar {
                     transition: all 0.2s ease;
                     width: 48px;
-                    height: 48px;
-                    box-shadow: 0px 0px 20px black;
+                    height: 40px;
                     margin-right: 4px;
 
                     &.dead {

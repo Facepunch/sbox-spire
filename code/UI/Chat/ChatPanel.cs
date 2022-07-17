@@ -84,7 +84,7 @@ public partial class ChatPanel : Panel
 		if ( message.Contains( '\n' ) || message.Contains( '\r' ) )
 			return;
 
-		AddChatEntry( To.Everyone, $"{ConsoleSystem.Caller.Name}: {message}", (int)ChatCategory.Chat );
+		AddChatEntry( To.Everyone, $"{ConsoleSystem.Caller.Name} says \"{message}\"", (int)ChatCategory.Chat );
 	}
 }
 

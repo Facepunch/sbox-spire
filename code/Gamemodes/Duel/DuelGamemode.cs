@@ -177,8 +177,8 @@ public partial class DuelGamemode : BaseGamemode
 			DuelGameState.WaitingForPlayers => "Waiting",
 			DuelGameState.RoundCountdown => TimeSpan.FromSeconds( TimeUntilRoundStart ).ToString( @"mm\:ss" ),
 			DuelGameState.RoundActive => TimeSpan.FromSeconds( TimeUntilRoundEnd ).ToString( @"mm\:ss" ),
-			DuelGameState.RoundWinnerDecided => "Round Over",
-			DuelGameState.GameWinnerDecided => "Game Over",
+			DuelGameState.RoundWinnerDecided => "-",
+			DuelGameState.GameWinnerDecided => "-",
 			_ => ""
 		};
 	}

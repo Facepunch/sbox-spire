@@ -16,7 +16,12 @@ ChatPanel {
         flex-shrink: 0;
         flex-grow: 0;
         font-size: 20px;
+        font-family: $secondary-font;
         background-image: linear-gradient( -90deg, rgba( black, 0.5 ), rgba( black, 0 ) );
+
+        label {
+            font-family: $secondary-font;
+        }
     }
 
     > .canvas {
@@ -58,8 +63,8 @@ ChatEntryPanel {
     }
 
     .category {
-        color: #ccc;
         font-size: 18px;
+        font-family: $secondary-font;
         font-weight: 600;
         flex-grow: 1;
         margin-right: 16px;
@@ -67,6 +72,7 @@ ChatEntryPanel {
 
     .message {
         color: #ccc;
+        font-family: $secondary-font;
         font-size: 18px;
         flex-grow: 1;
     }

@@ -23,8 +23,8 @@ public partial class ChatEntryPanel : Panel
 	{
 		return category switch
 		{
-			ChatCategory.Chat => Color.Green,
-			ChatCategory.System => Color.Cyan,
+			ChatCategory.Chat => new Color32( 0, 125, 255 ).ToColor(),
+			ChatCategory.System => new Color32( 255, 0, 0 ).ToColor(),
 			_ => Color.Red
 		};
 	}
