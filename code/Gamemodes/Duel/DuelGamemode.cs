@@ -26,7 +26,7 @@ public partial class DuelGamemode : BaseGamemode
 	public override BasePawn GetPawn( Client cl )
 	{
 		if ( CurrentState == DuelGameState.RoundActive )
-			return new DuelSpectatorPawn();
+			return new SpectatorPawn();
 
 		return new PlayerCharacter( cl );
 	}
@@ -231,7 +231,7 @@ public partial class DuelGamemode : BaseGamemode
 			return;
 		}
 
-		var pawn = new DuelSpectatorPawn();
+		var pawn = new SpectatorPawn();
 		cl.Pawn = pawn;
 		pawn.Respawn();
 	}

@@ -1,4 +1,4 @@
-namespace Spire.Gamemodes.Duel;
+namespace Spire;
 
 public enum Team
 {

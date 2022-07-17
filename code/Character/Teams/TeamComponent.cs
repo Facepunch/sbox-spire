@@ -1,9 +1,9 @@
-namespace Spire.Gamemodes.Duel;
+namespace Spire;
 
 public partial class TeamComponent : EntityComponent
 {
 	[Net]
-	public Team Team { get; set; }
+	public Team Team { get; set; } = Team.None;
 }
 
 public static partial class ClientExtensions
