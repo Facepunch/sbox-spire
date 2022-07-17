@@ -31,7 +31,7 @@ public partial class DuelGamemode : BaseGamemode
 		return new PlayerCharacter( cl );
 	}
 
-	public int GetTeamScore( DuelTeam team )
+	public int GetTeamScore( Team team )
 	{
 		return TeamScores[(int)team];
 	}
@@ -40,12 +40,17 @@ public partial class DuelGamemode : BaseGamemode
 	{
 		TeamScores = null;
 
-		foreach ( var team in Enum.GetValues( typeof( DuelTeam ) ) )
+		foreach ( var team in Enum.GetValues<Team>() )
+		{
+			if ( team == Team.None ) continue;
 			TeamScores.Add( 0 );
+		}
 	}
 
-	public void IncrementScore( DuelTeam team )
+	public void IncrementScore( Team team )
 	{
+		if ( team == Team.None ) return;
+
 		TeamScores[(int)team]++;
 	}
 
@@ -66,7 +71,7 @@ public partial class DuelGamemode : BaseGamemode
 
 	protected void AddToSuitableTeam( Client cl )
 	{
-		var lowest = DuelTeamHelpers.GetLowestTeam();
+		var lowest = TeamHelpers.GetLowestTeam();
 		cl.SetTeam( lowest );
 
 		if ( PlayerCount >= MinPlayers && CurrentState == DuelGameState.WaitingForPlayers )
@@ -77,8 +82,8 @@ public partial class DuelGamemode : BaseGamemode
 
 	protected bool AreTeamsBalanced()
 	{
-		int blueCount = DuelTeam.Blue.Count();
-		int redCount = DuelTeam.Red.Count();
+		int blueCount = Team.Blue.Count();
+		int redCount = Team.Red.Count();
 
 		return Math.Abs( blueCount - redCount ) <= 1;
 	}
@@ -89,7 +94,7 @@ public partial class DuelGamemode : BaseGamemode
 		int selectionIndex = 0;
 		foreach( var client in Client.All )
 		{
-			client.SetTeam( selectionIndex < playersPerTeam ? DuelTeam.Blue : DuelTeam.Red );
+			client.SetTeam( selectionIndex < playersPerTeam ? Team.Blue : Team.Red );
 
 			selectionIndex++;
 		}
@@ -143,18 +148,18 @@ public partial class DuelGamemode : BaseGamemode
 
 	protected void DecideRoundWinner()
 	{
-		var teamOneCount = DuelTeam.Blue.GetAliveMembers().Count();
-		var teamTwoCount = DuelTeam.Red.GetAliveMembers().Count();
+		var teamOneCount = Team.Blue.GetAliveMembers().Count();
+		var teamTwoCount = Team.Red.GetAliveMembers().Count();
 
 		if ( teamOneCount > teamTwoCount )
 		{
-			IncrementScore( DuelTeam.Blue );
-			ChatPanel.Announce( $"{DuelTeam.Blue.GetName()} wins the round!", ChatCategory.System );
+			IncrementScore( Team.Blue );
+			ChatPanel.Announce( $"{Team.Blue.GetName()} wins the round!", ChatCategory.System );
 		}
 		else if ( teamTwoCount > teamOneCount )
 		{
-			IncrementScore( DuelTeam.Red );
-			ChatPanel.Announce( $"{DuelTeam.Red.GetName()} wins the round!", ChatCategory.System );
+			IncrementScore( Team.Red );
+			ChatPanel.Announce( $"{Team.Red.GetName()} wins the round!", ChatCategory.System );
 		}
 		else
 		{
@@ -248,8 +253,8 @@ public partial class DuelGamemode : BaseGamemode
 			_ = BecomeSpectator( cl );
 		}
 
-		var blueCount = DuelTeam.Blue.AliveCount();
-		var redCount = DuelTeam.Red.AliveCount();
+		var blueCount = Team.Blue.AliveCount();
+		var redCount = Team.Red.AliveCount();
 
 		if ( CurrentState == DuelGameState.RoundActive )
 		{

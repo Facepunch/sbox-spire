@@ -11,8 +11,8 @@ public partial class DuelHudPanel : Panel
 	public Panel RedTeamMembers { get; set; }
 
 	public string GameState => $"{Gamemode?.GetGameStateText()}";
-	public string RedScore => $"{Gamemode?.GetTeamScore( DuelTeam.Red )}";
-	public string BlueScore => $"{Gamemode?.GetTeamScore( DuelTeam.Blue )}";
+	public string RedScore => $"{Gamemode?.GetTeamScore( Team.Red )}";
+	public string BlueScore => $"{Gamemode?.GetTeamScore( Team.Blue )}";
 
 	private TimeSince LastUpdatedAvatars = 1f;
 	private float AvatarUpdateRate = 1f;
@@ -24,9 +24,9 @@ public partial class DuelHudPanel : Panel
 		UpdateAvatars();
 	}
 
-	public Panel GetTeamPanel( DuelTeam team )
+	public Panel GetTeamPanel( Team team )
 	{
-		if ( team == DuelTeam.Blue )
+		if ( team == Team.Blue )
 			return BlueTeamMembers;
 		else
 			return RedTeamMembers;

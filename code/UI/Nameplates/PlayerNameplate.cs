@@ -30,8 +30,8 @@ public partial class PlayerNameplate : BaseNameplate
 		if ( cl.IsValid() )
 		{
 			var team = cl.GetTeam();
-			SetClass( "red", team == DuelTeam.Red );
-			SetClass( "blue", team == DuelTeam.Blue );
+			SetClass( "red", team == Team.Red );
+			SetClass( "blue", team == Team.Blue );
 		}
 	}
 }
