@@ -37,14 +37,10 @@ public partial class ClashGamemode : BaseGamemode
 
 	public void IncrementScore( Client cl )
 	{
-		if ( Scores.TryGetValue( cl, out int score ) )
-		{
-			Scores[cl]++;
-		}
-		else
-		{
-			Scores.Add( cl, 1 );
-		}
+		if ( CurrentState != ClashGameState.RoundActive )
+			return;
+
+		Scores[cl]++;
 	}
 
 	public int GetScore( Client cl )
@@ -60,7 +56,12 @@ public partial class ClashGamemode : BaseGamemode
 	public void ResetScores()
 	{
 		// Nulling out a [Net] variable will reset it.
-		Scores = null;
+		Scores.Clear();
+
+		foreach ( var cl in Client.All )
+		{
+			Scores.Add( cl, 0 );
+		}
 	}
 
 
@@ -80,6 +81,8 @@ public partial class ClashGamemode : BaseGamemode
 		}
 
 		cl.SetTeam( Team.None );
+
+		Scores.Add( cl, 0 );
 	}
 
 	public override void OnClientJoined( Client cl )
@@ -111,6 +114,7 @@ public partial class ClashGamemode : BaseGamemode
 	protected void BeginRound()
 	{
 		CleanupMap();
+		ResetScores();
 
 		Game.Current?.RespawnDeadPlayers();
 
