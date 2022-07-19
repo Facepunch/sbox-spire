@@ -14,7 +14,6 @@ partial class BaseCharacter
 		ent.Position = Position;
 		ent.Rotation = Rotation;
 		ent.Scale = Scale;
-		ent.MoveType = MoveType.Physics;
 		ent.UsePhysicsCollision = true;
 		ent.EnableAllCollisions = true;
 		ent.Tags.Add( "debris", "solid" );
@@ -28,6 +27,7 @@ partial class BaseCharacter
 		ent.SurroundingBoundsMode = SurroundingBoundsType.Physics;
 		ent.RenderColor = RenderColor;
 		ent.PhysicsGroup.Velocity = velocity;
+		ent.PhysicsEnabled = true;
 
 		foreach ( var child in Children )
 		{
