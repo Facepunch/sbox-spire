@@ -1,78 +1,93 @@
 namespace Spire.Gamemodes.Clash;
 
-partial class ScoreAvatar : Panel
+public class ScoreAvatar : Panel
 {
-	public Image Avatar { get; set; }
-	public Label Label { get; set; }
+	public CitizenPanel Avatar { get; set; }
+	public Label Score { get; set; }
+	public Label Name { get; set; }
+
+	public Client Client { get; set; }
 
 	public ScoreAvatar() : base()
-	{ 
+	{
 	}
 
-	public ScoreAvatar( Client cl, int score = 0, int position = 0 )
+	public ScoreAvatar( Client cl, int score = 0 )
 	{
-		Avatar = AddChild<Image>( "avatar" );
-		Avatar.SetTexture( $"avatar:{cl.PlayerId}" );
+		Client = cl;
 
-		Label = AddChild<Label>( "score" );
-
-		if ( score > 0 )
-		Label.Text = $"{score}";
-
-		SetClass( "dead", cl.Pawn is not PlayerCharacter );
+		Avatar = new CitizenPanel( cl );
+		AddChild( Avatar );
 		
-		ApplyPosition( position );
-	}
+		Score = AddChild<Label>( "score" );
 
-	void ApplyPosition( int position )
+		Name = AddChild<Label>( "name" );
+		Name.Text = $"{cl.Name}";
+
+		Update( score );
+		SetClass( "dead", cl.Pawn is not PlayerCharacter );
+	}
+		
+	public void Update( int score = 0 )
 	{
-		Avatar.SetClass( "gold", position == 0 );
-		Avatar.SetClass( "silver", position == 1 );
-		Avatar.SetClass( "bronze", position == 2 );
+		if ( score > 0 )
+			Score.Text = $"{score}";
 	}
 }
 
 [UseTemplate]
-public partial class ClashHudPanel : Panel
+public class ClashHudPanel : Panel
 {
 	public ClashGamemode Gamemode => BaseGamemode.Current as ClashGamemode;
+
+	public Dictionary<Client, ScoreAvatar> Entries = new();
 
 	// @ref
 	public Panel TeamMembers { get; set; }
 
 	public string GameState => $"{Gamemode?.GetGameStateText()}";
 
-	private TimeSince LastUpdatedAvatars = 1f;
-	private float AvatarUpdateRate = 1f;
-
 	public override void Tick()
 	{
 		base.Tick();
-
 		UpdateAvatars();
+	}
+
+	ScoreAvatar AddClient( Client cl, int score = 0 )
+	{
+		var p = new ScoreAvatar( cl, score );
+		TeamMembers.AddChild( p );
+
+		return p;
 	}
 
 	public void UpdateAvatars()
 	{
-		if ( LastUpdatedAvatars < AvatarUpdateRate )
-			return;
-
-		TeamMembers.DeleteChildren( true );
-		LastUpdatedAvatars = 0;
-		
-		var game = BaseGamemode.Current as ClashGamemode;
-		var sortedScores = game.Scores.OrderByDescending( kvp => kvp.Value ).ToList();
-
-		int position = 0;
-		foreach ( var kvp in sortedScores )
+		foreach ( var client in Client.All.Except( Entries.Keys ) )
 		{
-			var client = kvp.Key;
-			var score = kvp.Value;
-			var avatar = new ScoreAvatar( client, score, position );
+			var entry = AddClient( client );
+			Entries[client] = entry;
+		}
 
-			TeamMembers.AddChild( avatar );
+		foreach ( var client in Entries.Keys.Except( Client.All ) )
+		{
+			if ( Entries.TryGetValue( client, out var entry ) )
+			{
+				entry?.Delete();
+				Entries.Remove( client );
+			}
+		}
+	}
 
-			position++;
+	[Event( "spire.clash.updatescore" )]
+	void UpdateScores()
+	{
+		foreach ( var kv in Entries )
+		{
+			var client = kv.Key;
+			var entry = kv.Value;
+			var score = Gamemode?.GetScore( client ) ?? 0;
+			entry.Update( score );
 		}
 	}
 }

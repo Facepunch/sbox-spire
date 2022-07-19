@@ -32,8 +32,13 @@ public partial class ClashGamemode : BaseGamemode
 		base.Spawn();
 	}
 
-	[Net]
-	public Dictionary<Client, int> Scores { get; set; }
+	[Net, Change]
+	public IDictionary<Client, int> Scores { get; set; }
+
+	protected void OnScoresChanged( IDictionary<Client, int> a, IDictionary<Client, int> b )
+	{
+		Event.Run( "spire.clash.updatescore" );
+	}
 
 	public void IncrementScore( Client cl )
 	{

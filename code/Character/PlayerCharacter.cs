@@ -31,10 +31,14 @@ public partial class PlayerCharacter : BaseCharacter
 			Nameplate = new PlayerNameplate( this );
 	}
 
+	[Net] 
+	public string ClothingString { get; set; }
+
 	public PlayerCharacter( Client cl ) : this()
 	{
 		// Load clothing from client data
 		Clothing.LoadFromClient( cl );
+		ClothingString = cl.GetClientData( "avatar" );
 	}
 
 	public override void Respawn()
