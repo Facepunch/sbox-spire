@@ -5,8 +5,8 @@
 		AbilityID = "sword_heavy_attack"
 		AbilityName = "Slash"
 		Description = "A basic sword attack."
-		Cooldown = 1
-		Icon = resource:"ui/ability_icons/rage_attack.jpg"
+		Cooldown = 12
+		Icon = resource:"ui/ability_icons/rage_attack.png"
 		InteractionType = "Generic"
 		_AbilityRange = "0,0"
 		AbilityRange = 
