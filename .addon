@@ -17,7 +17,8 @@
   "RootNamespace": "Spire",
   "Metadata": {
     "MapList": [
-      "devultj.spire_meadows"
+      "devultj.spire_meadows",
+      "facepunch.spire_arena"
     ],
     "MinPlayers": 1,
     "MapSelect": "Tagged",
@@ -68,6 +69,11 @@
           "b": "player"
         }
       ]
+    },
+    "Compiler": {
+      "RootNamespace": "Sandbox",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;"
     }
   }
 }

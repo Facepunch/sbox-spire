@@ -5,11 +5,6 @@ public abstract partial class BaseGamemode : Entity
 	public static BaseGamemode Current { get; set; }
 
 	/// <summary>
-	/// An object reference, made by <see cref="GetGamemodePanel"/>
-	/// </summary>
-	public static Panel CurrentHudPanel { get; protected set; }
-
-	/// <summary>
 	/// A quick accessor to get how many people are in the game
 	/// </summary>
 	public int PlayerCount { get; private set; }
@@ -57,12 +52,6 @@ public abstract partial class BaseGamemode : Entity
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
-
-		CurrentHudPanel = GetGamemodePanel();
-
-		if ( CurrentHudPanel is not null )
-			CurrentHudPanel.Parent = Game.Current?.Hud;
-
 		Current = this;
 	}
 

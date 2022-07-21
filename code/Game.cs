@@ -20,7 +20,7 @@ public partial class Game : Sandbox.Game
 
 	public DayNight.DayNightSystem DayNightSystem { get; protected set; }
 
-	public SpireHud Hud { get; set; }
+	public SpireHudEntity Hud { get; set; }
 
 	StandardPostProcess _PostProcess;
 
@@ -28,14 +28,14 @@ public partial class Game : Sandbox.Game
 	{
 		if ( Host.IsClient )
 		{
-			Hud = new();
-
 			_PostProcess = new StandardPostProcess();
 			PostProcess.Add( _PostProcess );
 		}
 		else
 		{
 			DayNightSystem = new();
+
+			Hud = new();
 		}
 
 		Global.TickRate = 30;
