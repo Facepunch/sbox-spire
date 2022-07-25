@@ -11,7 +11,7 @@ public partial class DamageIndicator : Panel
 	public static void Create( Vector3 worldPos, float damageAmount )
 	{
 		var p = new DamageIndicator();
-		p.Parent = Game.Current.Hud.RootPanel;
+		p.Parent = Local.Hud;
 		p.Setup( worldPos, damageAmount );
 	}
 
