@@ -42,7 +42,6 @@ public partial class DuelGamemode : BaseGamemode
 
 		foreach ( var team in Enum.GetValues<Team>() )
 		{
-			if ( team == Team.None ) continue;
 			TeamScores.Add( 0 );
 		}
 	}
