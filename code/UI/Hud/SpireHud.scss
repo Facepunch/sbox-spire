@@ -1,10 +1,13 @@
 @import "/UI/Theme.scss";
 
 SpireHud {
-    pointer-events: visible;
+    pointer-events: none;
 
-    &.camera-movement {
+    .cursor {
         pointer-events: none;
+        &.enabled {
+            pointer-events: all;
+        }
     }
 
     &.invisible {
