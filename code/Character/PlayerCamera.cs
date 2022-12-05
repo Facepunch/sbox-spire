@@ -1,4 +1,5 @@
 
+using Sandbox;
 using System;
 
 namespace Spire;
@@ -72,6 +73,8 @@ public partial class PlayerCamera : CameraMode
 		Viewer = null;
 	}
 
+	protected PlayerCharacter Player => Local.Pawn as PlayerCharacter;
+
 	private AnimatedEntity FindTargetEntity()
 	{
 		var localPawn = Local.Pawn;
@@ -96,11 +99,11 @@ public partial class PlayerCamera : CameraMode
 
 	public bool IsSpectator => Local.Pawn != TargetEntity;
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
 		var pawn = TargetEntity;
 
-		var wheel = input.MouseWheel;
+		var wheel = Input.MouseWheel;
 		if ( wheel != 0 )
 		{
 			TargetOrbitDistance -= wheel * WheelSpeed;
@@ -111,36 +114,42 @@ public partial class PlayerCamera : CameraMode
 
 		if ( Input.UsingController )
 		{
-			OrbitAngles.yaw += input.AnalogLook.yaw;
-			OrbitAngles.pitch += input.AnalogLook.pitch;
+			OrbitAngles.yaw += Input.AnalogLook.yaw;
+			OrbitAngles.pitch += Input.AnalogLook.pitch;
 			OrbitAngles = OrbitAngles.Normal;
 
 			if ( !IsSpectator )
-				input.ViewAngles = OrbitAngles.WithPitch( 0f );
+			{
+				Player.ViewAngles = OrbitAngles.WithPitch( 0f );
+			}
 		}
-		else if ( input.Down( InputButton.SecondaryAttack ) )
+		else if ( Input.Down( InputButton.SecondaryAttack ) )
 		{
-			OrbitAngles.yaw += input.AnalogLook.yaw;
-			OrbitAngles.pitch += input.AnalogLook.pitch;
+			OrbitAngles.yaw += Input.AnalogLook.yaw;
+			OrbitAngles.pitch += Input.AnalogLook.pitch;
 			OrbitAngles = OrbitAngles.Normal;
 
-			if ( !IsSpectator )
-				input.ViewAngles = OrbitAngles.WithPitch( 0f );
+			if ( !IsSpectator && Player.IsValid() )
+			{
+				Player.ViewAngles = OrbitAngles.WithPitch( 0f );
+			}
 		}
 		
-		if ( !IsSpectator && pawn.IsValid() && !input.Down( InputButton.SecondaryAttack ) )
+		if ( !IsSpectator && Player.IsValid() && !Input.Down( InputButton.SecondaryAttack ) )
 		{
 			var direction = Screen.GetDirection( Mouse.Position, FieldOfView, Rotation, Screen.Size );
 			var hitPos = Utils.PlaneIntersectionWithZ( Position, direction, pawn.EyePosition.z );
 
-			input.ViewAngles = (hitPos - pawn.EyePosition).EulerAngles;
+			Player.ViewAngles = (hitPos - pawn.EyePosition).EulerAngles;
 		}
 
 		OrbitAngles.pitch = OrbitAngles.pitch.Clamp( PitchClamp.Min, PitchClamp.Max );
 
 		// Let players move around at will
-		if ( !IsSpectator )
-			input.InputDirection = Rotation.From( OrbitAngles.WithPitch( 0f ) ) * input.AnalogMove;
+		if ( !IsSpectator && Player.IsValid() )
+		{
+			Player.InputDirection = Rotation.From( OrbitAngles.WithPitch( 0f ) ) * Input.AnalogMove;
+		}
 
 		Sound.Listener = new()
 		{

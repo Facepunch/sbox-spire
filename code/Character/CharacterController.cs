@@ -77,9 +77,7 @@ public partial class CharacterController : BasePlayerController
 
 	public override void FrameSimulate()
 	{
-		base.FrameSimulate();
-
-		EyeRotation = Input.Rotation;
+		//EyeRotation = Input.Rotation;
 	}
 
 	public override void Simulate()
@@ -88,7 +86,7 @@ public partial class CharacterController : BasePlayerController
 		UpdateBBox();
 
 		EyeLocalPosition += TraceOffset;
-		EyeRotation = Input.Rotation;
+		//EyeRotation = Input.Rotation;
 
 		RestoreGroundPos();
 
@@ -100,27 +98,12 @@ public partial class CharacterController : BasePlayerController
 		if ( Unstuck.TestAndFix() )
 			return;
 
-		// Check Stuck
-		// Unstuck - or return if stuck
-
-		// Set Ground Entity to null if  falling faster then 250
-
-		// store water level to compare later
-
-		// if not on ground, store fall velocity
-
-		// player->UpdateStepSound( player->m_pSurfaceData, mv->GetAbsOrigin(), mv->m_vecVelocity )
-
-
-		// RunLadderMode
-
-		CheckLadder();
 		Swimming = Pawn.WaterLevel > 0.6f;
 
 		//
 		// Start Gravity
 		//
-		if ( !Swimming && !IsTouchingLadder )
+		if ( !Swimming )
 		{
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 			Velocity += new Vector3( 0, 0, BaseVelocity.z ) * Time.Delta;
@@ -168,12 +151,12 @@ public partial class CharacterController : BasePlayerController
 		// Work out wish velocity.. just take input, rotate it to view, clamp to -1, 1
 		//
 
-		WishVelocity = new Vector3( Input.Forward, Input.Left, 0 );
+		//WishVelocity = new Vector3( Input.Forward, Input.Left, 0 );
 		var inSpeed = WishVelocity.Length.Clamp( 0, 1 );
 		// @TODO: Do this properly
 		//WishVelocity *= Input.Rotation.Angles().WithPitch( 0 ).ToRotation();
 
-		if ( !Swimming && !IsTouchingLadder )
+		if ( !Swimming )
 		{
 			WishVelocity = WishVelocity.WithZ( 0 );
 		}
@@ -186,10 +169,6 @@ public partial class CharacterController : BasePlayerController
 		{
 			ApplyFriction( 1 );
 			WaterMove();
-		}
-		else if ( IsTouchingLadder )
-		{
-			LadderMove();
 		}
 		else if ( GroundEntity != null )
 		{
@@ -204,11 +183,10 @@ public partial class CharacterController : BasePlayerController
 		CategorizePosition( bStayOnGround );
 
 		// FinishGravity
-		if ( !Swimming && !IsTouchingLadder )
+		if ( !Swimming )
 		{
 			Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 		}
-
 
 		if ( GroundEntity != null )
 		{
@@ -490,63 +468,6 @@ public partial class CharacterController : BasePlayerController
 
 		Velocity -= BaseVelocity;
 	}
-
-	bool IsTouchingLadder = false;
-	Vector3 LadderNormal;
-
-	public virtual void CheckLadder()
-	{
-		var wishvel = new Vector3( Input.Forward, Input.Left, 0 );
-		wishvel *= Input.Rotation.Angles().WithPitch( 0 ).ToRotation();
-		wishvel = wishvel.Normal;
-
-		if ( IsTouchingLadder )
-		{
-			if ( Input.Pressed( InputButton.Jump ) )
-			{
-				Velocity = LadderNormal * 100.0f;
-				IsTouchingLadder = false;
-
-				return;
-
-			}
-			else if ( GroundEntity != null && LadderNormal.Dot( wishvel ) > 0 )
-			{
-				IsTouchingLadder = false;
-
-				return;
-			}
-		}
-
-		const float ladderDistance = 1.0f;
-		var start = Position;
-		Vector3 end = start + (IsTouchingLadder ? (LadderNormal * -1.0f) : wishvel) * ladderDistance;
-
-		var pm = Trace.Ray( start, end )
-					.Size( mins, maxs )
-					.WithTag( "ladder" )
-					.Ignore( Pawn )
-					.Run();
-
-		IsTouchingLadder = false;
-
-		if ( pm.Hit && pm.Entity is not ModelEntity me )
-		{
-			IsTouchingLadder = true;
-			LadderNormal = pm.Normal;
-		}
-	}
-
-	public virtual void LadderMove()
-	{
-		var velocity = WishVelocity;
-		float normalDot = velocity.Dot( LadderNormal );
-		var cross = LadderNormal * normalDot;
-		Velocity = (velocity - cross) + (-normalDot * LadderNormal.Cross( Vector3.Up.Cross( LadderNormal ).Normal ));
-
-		Move();
-	}
-
 
 	public virtual void CategorizePosition( bool bStayOnGround )
 	{

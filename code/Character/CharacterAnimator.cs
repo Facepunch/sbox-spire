@@ -11,7 +11,7 @@ public class CharacterAnimator : PawnAnimator
     public override void Simulate()
     {
         var player = Pawn as BaseCharacter;
-        var idealRotation = Rotation.LookAt( Input.Rotation.Forward.WithZ( 0 ), Vector3.Up );
+        var idealRotation = Rotation.LookAt( Pawn.EyeRotation.Forward.WithZ( 0 ), Vector3.Up );
 
         DoRotation( idealRotation );
         DoWalk();
@@ -32,7 +32,7 @@ public class CharacterAnimator : PawnAnimator
             SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
         }
 
-        Vector3 aimPos = Pawn.EyePosition + Input.Rotation.Forward * 200;
+        Vector3 aimPos = Pawn.EyePosition + Pawn.EyeRotation.Forward * 200;
         Vector3 lookPos = aimPos;
 
         //

@@ -287,12 +287,12 @@ public partial class ClashGamemode : BaseGamemode
 		return true;
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
 		if ( !AllowMovement() )
 		{
-			input.Clear();
-			input.StopProcessing = true;
+			Input.ClearButtons();
+			Input.StopProcessing = true;
 		}
 	}
 }

@@ -22,19 +22,15 @@ public partial class Game : Sandbox.Game
 
 	public SpireHudEntity Hud { get; set; }
 
-	StandardPostProcess _PostProcess;
-
 	public Game()
 	{
 		if ( Host.IsClient )
 		{
-			_PostProcess = new StandardPostProcess();
-			PostProcess.Add( _PostProcess );
+			//
 		}
 		else
 		{
 			DayNightSystem = new();
-
 			Hud = new();
 		}
 
@@ -111,47 +107,5 @@ public partial class Game : Sandbox.Game
 
 		// Simulate active gamemode
 		BaseGamemode.Current?.FrameSimulate( cl );
-
-		PostProcessTick();
-	}	
-
-	protected void PostProcessTick()
-	{
-		_PostProcess.Vignette.Enabled = true;
-		_PostProcess.Vignette.Intensity = 1.0f;
-		_PostProcess.Vignette.Roundness = 1.5f;
-		_PostProcess.Vignette.Smoothness = 0.5f;
-		_PostProcess.Vignette.Color = Color.Black;
-
-		_PostProcess.FilmGrain.Enabled = true;
-		_PostProcess.FilmGrain.Intensity = 0f;
-		_PostProcess.FilmGrain.Response = 1;
-
-		if ( Local.Pawn is BaseCharacter localPlayer )
-		{
-			var timeSinceDamage = localPlayer.TimeSinceDamage.Relative;
-			var damageUi = timeSinceDamage.LerpInverse( 0.25f, 0.0f, true ) * 0.3f;
-			if ( damageUi > 0 )
-			{
-				_PostProcess.Saturate.Amount -= damageUi;
-				_PostProcess.Vignette.Color = Color.Lerp( _PostProcess.Vignette.Color, new Color( 1f, 0.5f, 0.5f ), damageUi );
-				_PostProcess.Vignette.Intensity += damageUi;
-				_PostProcess.Vignette.Smoothness += damageUi;
-				_PostProcess.Vignette.Roundness += damageUi;
-
-				_PostProcess.Blur.Enabled = true;
-				_PostProcess.Blur.Strength = damageUi * 1f;
-			}
-			else
-			{
-				_PostProcess.Blur.Enabled = false;
-			}
-		}
-		else
-		{
-			_PostProcess.Blur.Enabled = false;
-		}
-
-		BaseGamemode.Current?.PostProcessTick( _PostProcess );
 	}
 }

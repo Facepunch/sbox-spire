@@ -40,11 +40,6 @@ public partial class PlayerCharacter
 		AbilityInteraction.KillGuides();
 	}
 
-	public void BuildInputAbilities( InputBuilder input )
-	{
-		// 
-	}
-
 	public TimeSince LastAbilityUsed { get; set; } = 1f;
 	public float GlobalAbilityCooldown => 1f;
 	public bool CanUseAbility() => LastAbilityUsed > GlobalAbilityCooldown;

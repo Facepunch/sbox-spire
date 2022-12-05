@@ -246,7 +246,6 @@ public partial class DuelGamemode : BaseGamemode
 			deathCam.FocusPoint = character.Position;
 
 			cl.Pawn?.Delete();
-
 			cl.Components.Add( deathCam );
 
 			_ = BecomeSpectator( cl );
@@ -316,12 +315,12 @@ public partial class DuelGamemode : BaseGamemode
 		return CurrentState != DuelGameState.RoundActive && CurrentState != DuelGameState.RoundWinnerDecided;
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
 		if ( !AllowMovement() )
 		{
-			input.Clear();
-			input.StopProcessing = true;
+			Input.ClearButtons();
+			Input.StopProcessing = true;
 		}
 	}
 }

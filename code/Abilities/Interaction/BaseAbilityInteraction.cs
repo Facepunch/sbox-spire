@@ -36,7 +36,7 @@ public abstract partial class AbilityInteraction : BaseNetworkable
 
 	public Vector3 GetWorldCursor()
 	{
-		var trace = Trace.Ray( Input.Cursor.Origin, Input.Cursor.Origin + Input.Cursor.Direction * 100000f )
+		var trace = Trace.Ray( CurrentView.Position, CurrentView.Position + Screen.GetDirection( Mouse.Position ) * 100000f )
 			.WithoutTags( "player" )
 			.Radius( 5f )
 			.Run();

@@ -24,6 +24,8 @@ public partial class PlayerCharacter : BaseCharacter
 	public override PawnController ActiveController => DevController ?? base.ActiveController;
 
 	public Particles UnitCircle { get; set; }
+	[ClientInput] public Vector3 InputDirection { get; set; }
+	[ClientInput] public Angles ViewAngles { get; set; }
 
 	public PlayerCharacter()
 	{
@@ -82,25 +84,27 @@ public partial class PlayerCharacter : BaseCharacter
 			UnitCircle = Particles.Create( "particles/widgets/circle/unit_circle_ground.vpcf", this, true );
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
-		BaseGamemode.Current?.BuildInput( input );
+		BaseGamemode.Current?.BuildInput( );
 
-		if ( input.StopProcessing ) return;
+		InputDirection = Input.AnalogMove;
+		var look = Input.AnalogLook;
+		var viewAngles = ViewAngles;
+		viewAngles += look;
+		ViewAngles = viewAngles.Normal;
 
-		BuildInputAbilities( input );
+		if ( Input.StopProcessing ) return;
 
-		if ( input.StopProcessing ) return;
+		ActiveChild?.BuildInput( );
 
-		ActiveChild?.BuildInput( input );
+		if ( Input.StopProcessing ) return;
 
-		if ( input.StopProcessing ) return;
+		Controller?.BuildInput( );
 
-		Controller?.BuildInput( input );
+		if ( Input.StopProcessing ) return;
 
-		if ( input.StopProcessing ) return;
-
-		Animator?.BuildInput( input );
+		Animator?.BuildInput( );
 	}
 
 	public override void OnKilled()

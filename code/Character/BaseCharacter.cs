@@ -140,7 +140,7 @@ public partial class BaseCharacter : BasePawn
 			LastDamageInfo.Flags,
 			LastDamageInfo.Position,
 			LastDamageInfo.Force,
-			GetHitboxBone( LastDamageInfo.HitboxIndex ) );
+			LastDamageInfo.BoneIndex );
 
 		BaseGamemode.Current?.OnCharacterKilled( this, LastDamageInfo );
 	}

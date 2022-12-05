@@ -20,14 +20,10 @@ public partial class DeathCameraMode : CameraMode
 			return;
 
 		Position = FocusPoint + GetViewOffset();
-		Rotation = Input.Rotation;
+		//Rotation = Input.Rotation;
 		FieldOfView = FieldOfView.LerpTo( 50, Time.Delta * 3.0f );
 
 		Viewer = null;
-	}
-
-	public override void BuildInput( InputBuilder input )
-	{
 	}
 
 	public virtual Vector3 GetViewOffset()
@@ -35,6 +31,7 @@ public partial class DeathCameraMode : CameraMode
 		var player = Local.Client;
 		if ( player == null ) return Vector3.Zero;
 
-		return Input.Rotation.Forward * (-300 * 1) + Vector3.Up * (60 * 1);
+		//return Input.Rotation.Forward * (-300 * 1) + Vector3.Up * (60 * 1);
+		return Vector3.Zero;
 	}
 }
