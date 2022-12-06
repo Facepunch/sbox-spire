@@ -26,6 +26,8 @@ public partial class PlayerCharacter : BaseCharacter
 	public Particles UnitCircle { get; set; }
 	[ClientInput] public Vector3 InputDirection { get; set; }
 	[ClientInput] public Angles ViewAngles { get; set; }
+	[ClientInput] public Vector3 CursorDirection { get; set; }
+	[ClientInput] public Vector3 CursorOrigin { get; set; }
 
 	public PlayerCharacter()
 	{
@@ -93,6 +95,9 @@ public partial class PlayerCharacter : BaseCharacter
 		var viewAngles = ViewAngles;
 		viewAngles += look;
 		ViewAngles = viewAngles.Normal;
+
+		CursorDirection = Screen.GetDirection( Mouse.Position );
+		CursorOrigin = CurrentView.Position;
 
 		if ( Input.StopProcessing ) return;
 

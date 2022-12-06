@@ -86,7 +86,9 @@ public partial class CharacterController : BasePlayerController
 		UpdateBBox();
 
 		EyeLocalPosition += TraceOffset;
-		//EyeRotation = Input.Rotation;
+
+		var player = Pawn as PlayerCharacter;
+		EyeRotation = player.ViewAngles.ToRotation();
 
 		RestoreGroundPos();
 

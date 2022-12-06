@@ -31,12 +31,12 @@ public abstract partial class AbilityInteraction : BaseNetworkable
 		return interaction;
 	}
 
-	[Net, Predicted]
-	public Vector3 WorldCursorPosition { get; set; }
+	[Net, Predicted] public Vector3 WorldCursorPosition { get; set; }
 
 	public Vector3 GetWorldCursor()
 	{
-		var trace = Trace.Ray( CurrentView.Position, CurrentView.Position + Screen.GetDirection( Mouse.Position ) * 100000f )
+		var player = Ability.GetCharacter();
+		var trace = Trace.Ray( player.CursorOrigin, player.CursorOrigin + player.CursorDirection * 100000f )
 			.WithoutTags( "player" )
 			.Radius( 5f )
 			.Run();
